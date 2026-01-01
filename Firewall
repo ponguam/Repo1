@@ -1,0 +1,34 @@
+import pandas as pd
+
+# 1. Define your constant values
+source_ip = "30.129.75.81"
+protocol = "TCP"
+port = 1525
+layer_7 = "" # Leave empty as per image
+b_column = "Yes"
+
+# 2. List your Destination IPs (add as many as you need here)
+destination_ips = [
+    "10.6.244.2/24", "10.6.244.20/24", "10.6.244.27/24", 
+    "10.6.244.55/24", "10.6.244.74/24", "10.6.244.120/24",
+    "10.6.244.115/24", "10.6.244.118/24", "10.6.244.143/24",
+    "10.6.244.177/24", "10.6.244.7/24", "10.6.244.76/24",
+    "10.6.244.246/24", "10.6.244.200/24", "10.6.244.237/24"
+]
+
+# 3. Create the data structure
+data = {
+    "Source IP": [source_ip] * len(destination_ips),
+    "Destination IP": destination_ips,
+    "Protocol": [protocol] * len(destination_ips),
+    "Layer 4 Port": [port] * len(destination_ips),
+    "Layer 7 Application": [layer_7] * len(destination_ips),
+    "B": [b_column] * len(destination_ips)
+}
+
+# 4. Create DataFrame and export to Excel
+df = pd.DataFrame(data)
+file_name = "Network_Inventory.xlsx"
+df.to_excel(file_name, index=False)
+
+print(f"Success! '{file_name}' has been created with {len(destination_ips)} rows.")
